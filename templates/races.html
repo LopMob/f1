@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Races - F1 Motion Lab{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>2024 Race Results</h1>
+        <p>Full calendar with winners and fastest lap times.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <table class="races-table">
+            <thead>
+                <tr>
+                    <th>Rd</th>
+                    <th>Grand Prix</th>
+                    <th>Circuit</th>
+                    <th>Date</th>
+                    <th>Winner</th>
+                    <th>Team</th>
+                    <th>Fastest Lap</th>
+                    <th>Laps</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for race in races %}
+                <tr class="race-row">
+                    <td class="round-num">{{ race.round }}</td>
+                    <td><span class="flag-inline">{{ race.flag }}</span> {{ race.grand_prix }}</td>
+                    <td class="muted">{{ race.track }}</td>
+                    <td class="muted">{{ race.date }}</td>
+                    <td class="winner-cell">🏆 {{ race.winner }}</td>
+                    <td class="muted">{{ race.team }}</td>
+                    <td class="mono">{{ race.fastest_lap }}</td>
+                    <td class="muted">{{ race.laps }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

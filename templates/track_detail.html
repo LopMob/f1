@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}{{ track.name }} - F1 Motion Lab{% endblock %}
+
+{% block content %}
+<section class="page-header track-detail-header">
+    <div class="container">
+        <div class="tdh-breadcrumb"><a href="{{ url_for('tracks') }}">← All Tracks</a></div>
+        <div class="tdh-top">
+            <span class="tdh-flag">{{ track.flag }}</span>
+            <div>
+                <h1>{{ track.name }}</h1>
+                <p class="tdh-city">{{ track.city }}, {{ track.country }}</p>
+            </div>
+            <div class="tdh-badges">
+                <span class="tc-type {{ track.type | lower }}">{{ track.type }}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick stats strip -->
+<div class="track-stats-strip">
+    <div class="container tss-inner">
+        <div class="tss-item"><span class="tss-val">{{ track.length_km }} km</span><span class="tss-label">Circuit Length</span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.corners }}</span><span class="tss-label">Corners</span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.drs_zones }}</span><span class="tss-label">DRS Zones</span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.lap_record }}</span><span class="tss-label">Lap Record</span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.record_holder }}</span><span class="tss-label">Record Holder ({{ track.record_year }})</span></div>
+        <div class="tss-item">
+            <span class="tss-val">
+                {% for i in range(5) %}<span class="diff-dot {% if i < track.difficulty %}filled{% endif %}" style="width:12px;height:12px"></span>{% endfor %}
+            </span>
+            <span class="tss-label">Difficulty</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="track-detail-layout">
+
+            <!-- Left: Visual + Description -->
+            <div class="track-left">
+                <div class="track-visual-card">
+                    <h2>Track Layout</h2>
+                    <div class="svg-wrap">
+                        <svg viewBox="0 0 520 520" class="track-svg">
+                            <path id="trackBase" d="{{ track.svg_path }}" fill="none" stroke="#f2f2f2" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path id="trackProgress" d="{{ track.svg_path }}" fill="none" stroke="#2f80ff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <g id="arrowMarker">
+                                <polygon points="0,-12 22,0 0,12 6,0" fill="#e10600"></polygon>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="replay-btn-wrap">
+                        <button class="secondary-btn" id="replayBtn" onclick="replayAnimation()">↺ Replay Lap</button>
+                    </div>
+                </div>
+
+                <div class="track-desc-card">
+                    <h2>About This Circuit</h2>
+                    <p>{{ track.description }}</p>
+                    <div class="recommendation-badge">
+                        <span class="rec-icon">⭐</span>
+                        <span>{{ track.recommendation }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Corner guide + Strategy -->
+            <div class="track-right">
+
+                <!-- Corner Guide -->
+                <div class="corners-card">
+                    <h2>Corner-by-Corner Guide</h2>
+                    <p class="corners-subtitle">Key braking points, apexes and driving techniques for each important section.</p>
+
+                    <div class="corners-list">
+                        {% for corner in track.key_corners %}
+                        <div class="corner-item">
+                            <div class="corner-header">
+                                {% if corner.turn %}
+                                <span class="corner-turn">T{{ corner.turn }}</span>
+                                {% else %}
+                                <span class="corner-turn">—</span>
+                                {% endif %}
+                                <div class="corner-meta">
+                                    <span class="corner-name">{{ corner.name }}</span>
+                                    <span class="corner-type">{{ corner.type }}</span>
+                                </div>
+                            </div>
+                            <p class="corner-tip">{{ corner.tip }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Strategy -->
+                <div class="strategy-card">
+                    <h2>Race Strategy Guide</h2>
+                    <ul class="strategy-list">
+                        {% for tip in track.strategy_tips %}
+                        <li class="strategy-item">
+                            <span class="strat-icon">🔧</span>
+                            <span>{{ tip }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Next track navigation -->
+<section class="section" style="padding-top:0">
+    <div class="container center">
+        <a class="secondary-btn" href="{{ url_for('tracks') }}">← Back to All Circuits</a>
+    </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/track.js') }}"></script>
+<script>
+function replayAnimation() {
+    const btn = document.getElementById('replayBtn');
+    btn.disabled = true;
+    btn.textContent = 'Running…';
+    // Reset and restart track animation
+    const event = new Event('DOMContentLoaded');
+    window._trackReplay && window._trackReplay();
+    setTimeout(() => { btn.disabled = false; btn.textContent = '↺ Replay Lap'; }, 3000);
+}
+</script>
+{% endblock %}

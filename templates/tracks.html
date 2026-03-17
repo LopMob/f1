@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Tracks - F1 Motion Lab{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Formula 1 Circuits</h1>
+        <p>Select a circuit to explore its layout, corner guides and race strategy.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterTracks('all', this)">All Circuits</button>
+            <button class="filter-btn" onclick="filterTracks('Street', this)">Street</button>
+            <button class="filter-btn" onclick="filterTracks('Permanent', this)">Permanent</button>
+            <span class="filter-sep"></span>
+            <span class="filter-label">Sort by:</span>
+            <button class="filter-btn" onclick="sortTracks('name', this)">Name</button>
+            <button class="filter-btn" onclick="sortTracks('km', this)">Length</button>
+            <button class="filter-btn" onclick="sortTracks('difficulty', this)">Difficulty</button>
+        </div>
+
+        <div class="tracks-grid" id="tracks-grid">
+            {% for track in tracks %}
+            <a href="{{ url_for('track_detail', track_id=track.id) }}"
+               class="track-card-new"
+               data-type="{{ track.type }}"
+               data-name="{{ track.name }}"
+               data-km="{{ track.length_km }}"
+               data-difficulty="{{ track.difficulty }}">
+
+                <div class="tc-header">
+                    <span class="tc-flag">{{ track.flag }}</span>
+                    <div class="tc-meta">
+                        <span class="tc-type {{ track.type | lower }}">{{ track.type }}</span>
+                        <span class="tc-country">{{ track.country }}</span>
+                    </div>
+                    <div class="tc-diff" title="Difficulty {{ track.difficulty }}/5">
+                        {% for i in range(5) %}
+                        <span class="diff-dot {% if i < track.difficulty %}filled{% endif %}"></span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <h3 class="tc-name">{{ track.name }}</h3>
+                <p class="tc-city">{{ track.city }}</p>
+
+                <div class="tc-stats">
+                    <div class="tc-stat"><span class="tc-stat-val">{{ track.length_km }}</span><span class="tc-stat-label">km</span></div>
+                    <div class="tc-stat"><span class="tc-stat-val">{{ track.corners }}</span><span class="tc-stat-label">corners</span></div>
+                    <div class="tc-stat"><span class="tc-stat-val">{{ track.drs_zones }}</span><span class="tc-stat-label">DRS zones</span></div>
+                    <div class="tc-stat overtaking-stat">
+                        <span class="tc-stat-label">Overtaking</span>
+                        <div class="ot-dots">
+                            {% for i in range(5) %}
+                            <span class="diff-dot {% if i < track.overtaking %}filled red{% endif %}"></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <p class="tc-desc">{{ track.description[:110] }}…</p>
+
+                <div class="tc-record">
+                    <span class="tc-record-time">⏱ {{ track.lap_record }}</span>
+                    <span class="tc-record-holder">{{ track.record_holder }}, {{ track.record_year }}</span>
+                </div>
+
+                <div class="tc-cta">Open Circuit Guide →</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+const grid = document.getElementById('tracks-grid');
+
+function cards() {
+    return Array.from(grid.querySelectorAll('.track-card-new'));
+}
+
+let activeType = 'all';
+
+function filterTracks(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeType = type;
+    cards().forEach(c => {
+        c.style.display = (type === 'all' || c.dataset.type === type) ? '' : 'none';
+    });
+}
+
+function sortTracks(key, btn) {
+    const all = cards();
+    all.sort((a, b) => {
+        if (key === 'name') {
+            return a.dataset.name.localeCompare(b.dataset.name);
+        } else if (key === 'km') {
+            return parseFloat(a.dataset.km) - parseFloat(b.dataset.km);
+        } else if (key === 'difficulty') {
+            return parseInt(b.dataset.difficulty) - parseInt(a.dataset.difficulty);
+        }
+        return 0;
+    });
+    all.forEach(c => grid.appendChild(c));
+}
+</script>
+{% endblock %}

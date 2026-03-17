@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Compare Drivers - F1 Motion Lab{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Driver Comparison</h1>
+        <p>Head-to-head stats for any two drivers in 2024.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="compare-selectors">
+            <select id="selA" onchange="updateCompare()">
+                {% for d in drivers %}
+                <option value="{{ loop.index0 }}" {% if loop.index0 == 0 %}selected{% endif %}>{{ d.name }}</option>
+                {% endfor %}
+            </select>
+            <span class="vs-badge">VS</span>
+            <select id="selB" onchange="updateCompare()">
+                {% for d in drivers %}
+                <option value="{{ loop.index0 }}" {% if loop.index0 == 2 %}selected{% endif %}>{{ d.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="compare-grid" id="compare-output"></div>
+    </div>
+</section>
+
+<script>
+const drivers = {{ drivers | tojson }};
+
+const STATS = [
+    { key: 'points', label: 'Points' },
+    { key: 'wins', label: 'Wins' },
+    { key: 'podiums', label: 'Podiums' },
+    { key: 'poles', label: 'Pole Positions' },
+    { key: 'fastest_laps', label: 'Fastest Laps' },
+];
+
+function updateCompare() {
+    const a = drivers[+document.getElementById('selA').value];
+    const b = drivers[+document.getElementById('selB').value];
+    const out = document.getElementById('compare-output');
+
+    let html = `
+        <div class="compare-header">
+            <div class="compare-driver" style="border-color:${a.color}">
+                <div class="cmp-flag">${a.flag}</div>
+                <div class="cmp-name">${a.name}</div>
+                <div class="cmp-team" style="color:${a.color}">${a.team}</div>
+                <div class="cmp-num">#${a.number}</div>
+            </div>
+            <div class="compare-driver" style="border-color:${b.color}">
+                <div class="cmp-flag">${b.flag}</div>
+                <div class="cmp-name">${b.name}</div>
+                <div class="cmp-team" style="color:${b.color}">${b.team}</div>
+                <div class="cmp-num">#${b.number}</div>
+            </div>
+        </div>
+        <div class="compare-bars">`;
+
+    STATS.forEach(s => {
+        const va = a[s.key], vb = b[s.key];
+        const total = va + vb || 1;
+        const pctA = Math.round(va / total * 100);
+        const pctB = 100 - pctA;
+        const winnerA = va > vb;
+        const winnerB = vb > va;
+        html += `
+            <div class="cmp-row">
+                <span class="cmp-val ${winnerA ? 'cmp-winner' : ''}">${va}</span>
+                <div class="cmp-bar-group">
+                    <div class="cmp-bar-label">${s.label}</div>
+                    <div class="cmp-bar-track">
+                        <div class="cmp-bar-a" style="width:${pctA}%;background:${a.color}"></div>
+                        <div class="cmp-bar-b" style="width:${pctB}%;background:${b.color}"></div>
+                    </div>
+                </div>
+                <span class="cmp-val ${winnerB ? 'cmp-winner' : ''}">${vb}</span>
+            </div>`;
+    });
+
+    html += `</div>
+        <div class="compare-bio-grid">
+            <div class="compare-bio-card" style="border-top:3px solid ${a.color}"><p>${a.bio}</p></div>
+            <div class="compare-bio-card" style="border-top:3px solid ${b.color}"><p>${b.bio}</p></div>
+        </div>`;
+
+    out.innerHTML = html;
+}
+
+updateCompare();
+</script>
+{% endblock %}

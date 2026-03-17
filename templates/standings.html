@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Standings - F1 Motion Lab{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Championship Standings</h1>
+        <p>2024 Formula 1 World Championship — Drivers &amp; Constructors.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="standings-tabs">
+            <button class="stab active" onclick="switchTab('drivers')">Drivers</button>
+            <button class="stab" onclick="switchTab('constructors')">Constructors</button>
+        </div>
+
+        <!-- Drivers standings -->
+        <div id="tab-drivers">
+            <div class="standings-list">
+                {% set max_pts = drivers[0].points %}
+                {% for driver in drivers %}
+                <div class="standing-row">
+                    <span class="standing-pos {% if loop.index == 1 %}gold{% elif loop.index == 2 %}silver{% elif loop.index == 3 %}bronze{% endif %}">
+                        {{ loop.index }}
+                    </span>
+                    <span class="standing-flag">{{ driver.flag }}</span>
+                    <div class="standing-info">
+                        <span class="standing-name">{{ driver.name }}</span>
+                        <span class="standing-team" style="color: {{ driver.color }}">{{ driver.team }}</span>
+                    </div>
+                    <div class="standing-bar-wrap">
+                        <div class="standing-bar" style="width: {{ (driver.points / max_pts * 100)|int }}%; background: {{ driver.color }}"></div>
+                    </div>
+                    <span class="standing-pts">{{ driver.points }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Constructors standings -->
+        <div id="tab-constructors" style="display:none">
+            <div class="standings-list">
+                {% set max_cpts = constructors[0].points %}
+                {% for team in constructors %}
+                <div class="standing-row">
+                    <span class="standing-pos {% if loop.index == 1 %}gold{% elif loop.index == 2 %}silver{% elif loop.index == 3 %}bronze{% endif %}">
+                        {{ loop.index }}
+                    </span>
+                    <span class="standing-flag">🏎️</span>
+                    <div class="standing-info">
+                        <span class="standing-name">{{ team.name }}</span>
+                        <span class="standing-team" style="color: {{ team.color }}">{{ team.wins }} wins · {{ team.podiums }} podiums</span>
+                    </div>
+                    <div class="standing-bar-wrap">
+                        <div class="standing-bar" style="width: {{ (team.points / max_cpts * 100)|int }}%; background: {{ team.color }}"></div>
+                    </div>
+                    <span class="standing-pts">{{ team.points }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function switchTab(tab) {
+    document.getElementById('tab-drivers').style.display = tab === 'drivers' ? 'block' : 'none';
+    document.getElementById('tab-constructors').style.display = tab === 'constructors' ? 'block' : 'none';
+    document.querySelectorAll('.stab').forEach((b, i) => {
+        b.classList.toggle('active', (i === 0 && tab === 'drivers') || (i === 1 && tab === 'constructors'));
+    });
+}
+</script>
+{% endblock %}

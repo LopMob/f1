@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Drivers - F1 Motion Lab{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>2024 Drivers</h1>
+        <p>All competitors in the Formula 1 World Championship.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="card-grid drivers-grid">
+            {% for driver in drivers %}
+            <div class="driver-card" style="--team-color: {{ driver.color }}">
+                <div class="driver-number">#{{ driver.number }}</div>
+                <div class="driver-flag">{{ driver.flag }}</div>
+                <h3 class="driver-name">{{ driver.name }}</h3>
+                <div class="driver-team" style="color: {{ driver.color }}">{{ driver.team }}</div>
+                <p class="driver-bio">{{ driver.bio }}</p>
+                <div class="driver-stats">
+                    <div class="dstat">
+                        <span class="dstat-val">{{ driver.points }}</span>
+                        <span class="dstat-label">PTS</span>
+                    </div>
+                    <div class="dstat">
+                        <span class="dstat-val">{{ driver.wins }}</span>
+                        <span class="dstat-label">Wins</span>
+                    </div>
+                    <div class="dstat">
+                        <span class="dstat-val">{{ driver.podiums }}</span>
+                        <span class="dstat-label">Podiums</span>
+                    </div>
+                    <div class="dstat">
+                        <span class="dstat-val">{{ driver.poles }}</span>
+                        <span class="dstat-label">Poles</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

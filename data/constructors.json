@@ -1,0 +1,10 @@
+[
+  { "id": "red_bull", "name": "Red Bull Racing", "color": "#3B57FF", "points": 860, "wins": 19, "podiums": 27 },
+  { "id": "mclaren", "name": "McLaren", "color": "#FF8000", "points": 573, "wins": 5, "podiums": 19 },
+  { "id": "ferrari", "name": "Ferrari", "color": "#E8002D", "points": 610, "wins": 5, "podiums": 17 },
+  { "id": "mercedes", "name": "Mercedes", "color": "#27F4D2", "points": 479, "wins": 3, "podiums": 14 },
+  { "id": "aston_martin", "name": "Aston Martin", "color": "#358C75", "points": 86, "wins": 0, "podiums": 2 },
+  { "id": "alpine", "name": "Alpine", "color": "#FF69B4", "points": 49, "wins": 0, "podiums": 0 },
+  { "id": "haas", "name": "Haas", "color": "#B6BABD", "points": 31, "wins": 0, "podiums": 0 },
+  { "id": "rb", "name": "RB", "color": "#6692FF", "points": 28, "wins": 0, "podiums": 0 }
+]
