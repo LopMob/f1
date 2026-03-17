@@ -13,7 +13,8 @@
     "poles": 12,
     "fastest_laps": 8,
     "color": "#3B57FF",
-    "bio": "Three-time world champion and one of the most dominant drivers in F1 history. Known for his exceptional wet-weather driving and relentless pace."
+    "bio": "Three-time world champion and one of the most dominant drivers in F1 history. Known for his exceptional wet-weather driving and relentless pace.",
+    "bio_ru": "Трёхкратный чемпион мира и один из самых доминирующих пилотов в истории Ф1. Известен исключительным пилотажем в дождь и неустанным темпом."
   },
   {
     "id": "norris",
@@ -29,7 +30,8 @@
     "poles": 3,
     "fastest_laps": 5,
     "color": "#FF8000",
-    "bio": "Rising star of Formula 1. Consistent performer who delivered McLaren's resurgence with multiple victories in 2024."
+    "bio": "Rising star of Formula 1. Consistent performer who delivered McLaren's resurgence with multiple victories in 2024.",
+    "bio_ru": "Восходящая звезда Формулы 1. Стабильный пилот, обеспечивший возрождение McLaren с несколькими победами в 2024 году."
   },
   {
     "id": "leclerc",
@@ -45,7 +47,8 @@
     "poles": 5,
     "fastest_laps": 3,
     "color": "#E8002D",
-    "bio": "Ferrari's lead driver and Monaco native who finally conquered his home race in 2024. Known for his exceptional qualifying pace."
+    "bio": "Ferrari's lead driver and Monaco native who finally conquered his home race in 2024. Known for his exceptional qualifying pace.",
+    "bio_ru": "Лидер Ferrari и уроженец Монако, наконец завоевавший домашнюю гонку в 2024 году. Известен выдающейся скоростью в квалификации."
   },
   {
     "id": "sainz",
@@ -61,7 +64,8 @@
     "poles": 2,
     "fastest_laps": 2,
     "color": "#E8002D",
-    "bio": "Smooth and consistent racer. Won the Australian GP and demonstrated great technical feedback to help Ferrari's development."
+    "bio": "Smooth and consistent racer. Won the Australian GP and demonstrated great technical feedback to help Ferrari's development.",
+    "bio_ru": "Плавный и стабильный гонщик. Победил на Гран-при Австралии и обеспечил Ferrari ценную техническую обратную связь."
   },
   {
     "id": "perez",
@@ -77,7 +81,8 @@
     "poles": 1,
     "fastest_laps": 1,
     "color": "#3B57FF",
-    "bio": "Experienced campaigner who contributes crucial constructor points for Red Bull. Known as the 'Minister of Defence' for his strategic racing."
+    "bio": "Experienced campaigner who contributes crucial constructor points for Red Bull. Known as the 'Minister of Defence' for his strategic racing.",
+    "bio_ru": "Опытный гонщик, приносящий Red Bull важнейшие очки в Кубке конструкторов. Известен как «Министр обороны» за стратегическую езду."
   },
   {
     "id": "russell",
@@ -93,7 +98,8 @@
     "poles": 2,
     "fastest_laps": 4,
     "color": "#27F4D2",
-    "bio": "Precision driver and future championship contender. Consistent points scorer who stepped up as Mercedes' de facto team leader in 2024."
+    "bio": "Precision driver and future championship contender. Consistent points scorer who stepped up as Mercedes' de facto team leader in 2024.",
+    "bio_ru": "Точный пилот и будущий претендент на чемпионство. Стабильно набирает очки и фактически возглавляет Mercedes в 2024 году."
   },
   {
     "id": "hamilton",
@@ -109,7 +115,8 @@
     "poles": 1,
     "fastest_laps": 2,
     "color": "#27F4D2",
-    "bio": "Seven-time world champion and the most successful driver in F1 history. Still competing at the highest level before his 2025 move to Ferrari."
+    "bio": "Seven-time world champion and the most successful driver in F1 history. Still competing at the highest level before his 2025 move to Ferrari.",
+    "bio_ru": "Семикратный чемпион мира и самый успешный пилот в истории Ф1. Продолжает выступать на высшем уровне перед переходом в Ferrari в 2025 году."
   },
   {
     "id": "piastri",
@@ -125,6 +132,7 @@
     "poles": 1,
     "fastest_laps": 3,
     "color": "#FF8000",
-    "bio": "Rookie sensation turned race winner. Piastri's calm racecraft and raw pace make him one of the most exciting young talents in the paddock."
+    "bio": "Rookie sensation turned race winner. Piastri's calm racecraft and raw pace make him one of the most exciting young talents in the paddock.",
+    "bio_ru": "Дебютант, ставший победителем гонок. Хладнокровная техника пилотирования и природная скорость делают его одним из самых ярких молодых талантов."
   }
 ]

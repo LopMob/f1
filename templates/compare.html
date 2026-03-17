@@ -4,8 +4,8 @@
 {% block content %}
 <section class="page-header">
     <div class="container">
-        <h1>Driver Comparison</h1>
-        <p>Head-to-head stats for any two drivers in 2024.</p>
+        <h1 data-i18n="compare_title"></h1>
+        <p data-i18n="compare_subtitle"></p>
     </div>
 </section>
 
@@ -13,18 +13,13 @@
     <div class="container">
         <div class="compare-selectors">
             <select id="selA" onchange="updateCompare()">
-                {% for d in drivers %}
-                <option value="{{ loop.index0 }}" {% if loop.index0 == 0 %}selected{% endif %}>{{ d.name }}</option>
-                {% endfor %}
+                {% for d in drivers %}<option value="{{ loop.index0 }}" {% if loop.index0 == 0 %}selected{% endif %}>{{ d.name }}</option>{% endfor %}
             </select>
             <span class="vs-badge">VS</span>
             <select id="selB" onchange="updateCompare()">
-                {% for d in drivers %}
-                <option value="{{ loop.index0 }}" {% if loop.index0 == 2 %}selected{% endif %}>{{ d.name }}</option>
-                {% endfor %}
+                {% for d in drivers %}<option value="{{ loop.index0 }}" {% if loop.index0 == 2 %}selected{% endif %}>{{ d.name }}</option>{% endfor %}
             </select>
         </div>
-
         <div class="compare-grid" id="compare-output"></div>
     </div>
 </section>
@@ -33,17 +28,18 @@
 const drivers = {{ drivers | tojson }};
 
 const STATS = [
-    { key: 'points', label: 'Points' },
-    { key: 'wins', label: 'Wins' },
-    { key: 'podiums', label: 'Podiums' },
-    { key: 'poles', label: 'Pole Positions' },
-    { key: 'fastest_laps', label: 'Fastest Laps' },
+    { key: 'points',       en: 'Points',         ru: 'Очки'           },
+    { key: 'wins',         en: 'Wins',           ru: 'Победы'         },
+    { key: 'podiums',      en: 'Podiums',        ru: 'Подиумы'        },
+    { key: 'poles',        en: 'Pole Positions', ru: 'Поул-позиции'   },
+    { key: 'fastest_laps', en: 'Fastest Laps',   ru: 'Быстрых кругов' },
 ];
 
 function updateCompare() {
-    const a = drivers[+document.getElementById('selA').value];
-    const b = drivers[+document.getElementById('selB').value];
+    const a   = drivers[+document.getElementById('selA').value];
+    const b   = drivers[+document.getElementById('selB').value];
     const out = document.getElementById('compare-output');
+    const lang = localStorage.getItem('f1_lang') || 'en';
 
     let html = `
         <div class="compare-header">
@@ -63,35 +59,34 @@ function updateCompare() {
         <div class="compare-bars">`;
 
     STATS.forEach(s => {
-        const va = a[s.key], vb = b[s.key];
+        const va = a[s.key] || 0, vb = b[s.key] || 0;
         const total = va + vb || 1;
         const pctA = Math.round(va / total * 100);
-        const pctB = 100 - pctA;
-        const winnerA = va > vb;
-        const winnerB = vb > va;
+        const label = s[lang] || s.en;
         html += `
             <div class="cmp-row">
-                <span class="cmp-val ${winnerA ? 'cmp-winner' : ''}">${va}</span>
+                <span class="cmp-val ${va > vb ? 'cmp-winner' : ''}">${va}</span>
                 <div class="cmp-bar-group">
-                    <div class="cmp-bar-label">${s.label}</div>
+                    <div class="cmp-bar-label">${label}</div>
                     <div class="cmp-bar-track">
                         <div class="cmp-bar-a" style="width:${pctA}%;background:${a.color}"></div>
-                        <div class="cmp-bar-b" style="width:${pctB}%;background:${b.color}"></div>
+                        <div class="cmp-bar-b" style="width:${100-pctA}%;background:${b.color}"></div>
                     </div>
                 </div>
-                <span class="cmp-val ${winnerB ? 'cmp-winner' : ''}">${vb}</span>
+                <span class="cmp-val ${vb > va ? 'cmp-winner' : ''}">${vb}</span>
             </div>`;
     });
 
     html += `</div>
         <div class="compare-bio-grid">
-            <div class="compare-bio-card" style="border-top:3px solid ${a.color}"><p>${a.bio}</p></div>
-            <div class="compare-bio-card" style="border-top:3px solid ${b.color}"><p>${b.bio}</p></div>
+            <div class="compare-bio-card" style="border-top:3px solid ${a.color}"><p>${lang === 'ru' && a.bio_ru ? a.bio_ru : a.bio}</p></div>
+            <div class="compare-bio-card" style="border-top:3px solid ${b.color}"><p>${lang === 'ru' && b.bio_ru ? b.bio_ru : b.bio}</p></div>
         </div>`;
 
     out.innerHTML = html;
 }
 
 updateCompare();
+document.addEventListener('langchange', updateCompare);
 </script>
 {% endblock %}

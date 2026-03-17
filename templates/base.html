@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}F1 Motion Lab{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/i18n.js') }}" defer></script>
 </head>
 <body>
     <header class="site-header">
         <a href="{{ url_for('home') }}" class="logo">F1 Motion Lab</a>
         <nav class="nav">
-            <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
-            <a href="{{ url_for('tracks') }}" class="{% if request.endpoint in ['tracks','track_detail'] %}active{% endif %}">Tracks</a>
-            <a href="{{ url_for('drivers') }}" class="{% if request.endpoint == 'drivers' %}active{% endif %}">Drivers</a>
-            <a href="{{ url_for('races') }}" class="{% if request.endpoint == 'races' %}active{% endif %}">Races</a>
-            <a href="{{ url_for('standings') }}" class="{% if request.endpoint == 'standings' %}active{% endif %}">Standings</a>
-            <a href="{{ url_for('compare') }}" class="{% if request.endpoint == 'compare' %}active{% endif %}">Compare</a>
+            <a href="{{ url_for('home') }}"       class="{% if request.endpoint == 'home' %}active{% endif %}"                          data-i18n="nav_home"></a>
+            <a href="{{ url_for('tracks') }}"     class="{% if request.endpoint in ['tracks','track_detail'] %}active{% endif %}"       data-i18n="nav_tracks"></a>
+            <a href="{{ url_for('drivers') }}"    class="{% if request.endpoint == 'drivers' %}active{% endif %}"                       data-i18n="nav_drivers"></a>
+            <a href="{{ url_for('races') }}"      class="{% if request.endpoint == 'races' %}active{% endif %}"                         data-i18n="nav_races"></a>
+            <a href="{{ url_for('standings') }}"  class="{% if request.endpoint == 'standings' %}active{% endif %}"                     data-i18n="nav_standings"></a>
+            <a href="{{ url_for('compare') }}"    class="{% if request.endpoint == 'compare' %}active{% endif %}"                       data-i18n="nav_compare"></a>
         </nav>
+        <div class="lang-switcher">
+            <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+        </div>
     </header>
 
     {% block content %}{% endblock %}
@@ -24,7 +29,7 @@
     <footer class="site-footer">
         <div class="container">
             <span class="footer-logo">F1 Motion Lab</span>
-            <span class="footer-copy">Data for entertainment purposes · Season 2024</span>
+            <span class="footer-copy" data-i18n="footer_copy"></span>
         </div>
     </footer>
 </body>

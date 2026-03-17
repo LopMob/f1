@@ -4,7 +4,7 @@
 {% block content %}
 <section class="page-header track-detail-header">
     <div class="container">
-        <div class="tdh-breadcrumb"><a href="{{ url_for('tracks') }}">← All Tracks</a></div>
+        <div class="tdh-breadcrumb"><a href="{{ url_for('tracks') }}" data-i18n="back_link"></a></div>
         <div class="tdh-top">
             <span class="tdh-flag">{{ track.flag }}</span>
             <div>
@@ -18,19 +18,16 @@
     </div>
 </section>
 
-<!-- Quick stats strip -->
 <div class="track-stats-strip">
     <div class="container tss-inner">
-        <div class="tss-item"><span class="tss-val">{{ track.length_km }} km</span><span class="tss-label">Circuit Length</span></div>
-        <div class="tss-item"><span class="tss-val">{{ track.corners }}</span><span class="tss-label">Corners</span></div>
-        <div class="tss-item"><span class="tss-val">{{ track.drs_zones }}</span><span class="tss-label">DRS Zones</span></div>
-        <div class="tss-item"><span class="tss-val">{{ track.lap_record }}</span><span class="tss-label">Lap Record</span></div>
-        <div class="tss-item"><span class="tss-val">{{ track.record_holder }}</span><span class="tss-label">Record Holder ({{ track.record_year }})</span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.length_km }} km</span><span class="tss-label" data-i18n="label_circuit_length"></span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.corners }}</span><span class="tss-label" data-i18n="label_corners"></span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.drs_zones }}</span><span class="tss-label" data-i18n="label_drs"></span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.lap_record }}</span><span class="tss-label" data-i18n="label_lap_record"></span></div>
+        <div class="tss-item"><span class="tss-val">{{ track.record_holder }}</span><span class="tss-label" data-i18n="label_record_holder"> ({{ track.record_year }})</span></div>
         <div class="tss-item">
-            <span class="tss-val">
-                {% for i in range(5) %}<span class="diff-dot {% if i < track.difficulty %}filled{% endif %}" style="width:12px;height:12px"></span>{% endfor %}
-            </span>
-            <span class="tss-label">Difficulty</span>
+            <span class="tss-val">{% for i in range(5) %}<span class="diff-dot {% if i < track.difficulty %}filled{% endif %}" style="width:12px;height:12px"></span>{% endfor %}</span>
+            <span class="tss-label" data-i18n="label_difficulty"></span>
         </div>
     </div>
 </div>
@@ -39,98 +36,112 @@
     <div class="container">
         <div class="track-detail-layout">
 
-            <!-- Left: Visual + Description -->
             <div class="track-left">
                 <div class="track-visual-card">
-                    <h2>Track Layout</h2>
+                    <div class="track-visual-header">
+                        <h2 data-i18n="track_layout"></h2>
+                        <div class="track-legend">
+                            <span class="legend-item"><span class="legend-dot" style="background:#e10600"></span><span data-i18n="racing_line"></span></span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#fff"></span><span data-i18n="corner_markers"></span></span>
+                        </div>
+                    </div>
+
                     <div class="svg-wrap">
-                        <svg viewBox="0 0 520 520" class="track-svg">
-                            <path id="trackBase" d="{{ track.svg_path }}" fill="none" stroke="#f2f2f2" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path id="trackProgress" d="{{ track.svg_path }}" fill="none" stroke="#2f80ff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <g id="arrowMarker">
-                                <polygon points="0,-12 22,0 0,12 6,0" fill="#e10600"></polygon>
+                        <svg viewBox="0 0 480 480" class="track-svg" id="trackSvg">
+                            <path id="trackBase" d="{{ track.svg_path }}" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path id="trackProgress" d="{{ track.svg_path }}" fill="none" stroke="#e10600" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <g id="cornerMarkers"></g>
+                            <g id="carMarker">
+                                <rect x="-11" y="-4" width="22" height="8" rx="3" fill="#e10600"/>
+                                <rect x="-14" y="-5.5" width="6" height="11" rx="1.5" fill="#fff" opacity="0.9"/>
+                                <rect x="8" y="-6" width="4" height="12" rx="1" fill="#fff" opacity="0.9"/>
+                                <ellipse cx="1" cy="0" rx="5" ry="3" fill="#1a1a2e"/>
+                                <rect x="-6" y="-7" width="7" height="4" rx="2" fill="#111"/>
+                                <rect x="-6" y="3" width="7" height="4" rx="2" fill="#111"/>
+                                <rect x="2" y="-7" width="7" height="4" rx="2" fill="#111"/>
+                                <rect x="2" y="3" width="7" height="4" rx="2" fill="#111"/>
                             </g>
                         </svg>
                     </div>
 
                     <div class="replay-btn-wrap">
-                        <button class="secondary-btn" id="replayBtn" onclick="replayAnimation()">↺ Replay Lap</button>
+                        <button class="replay-btn" id="replayBtn">
+                            <span class="replay-icon">↺</span> <span data-i18n="replay_lap"></span>
+                        </button>
+                        <span class="corner-hint" data-i18n="click_hint"></span>
                     </div>
                 </div>
 
                 <div class="track-desc-card">
-                    <h2>About This Circuit</h2>
-                    <p>{{ track.description }}</p>
+                    <h2 data-i18n="about_circuit"></h2>
+                    <p id="track-description"
+                       data-en="{{ track.description }}"
+                       data-ru="{{ track.description_ru or track.description }}">{{ track.description }}</p>
                     <div class="recommendation-badge">
                         <span class="rec-icon">⭐</span>
-                        <span>{{ track.recommendation }}</span>
+                        <span id="track-recommendation"
+                              data-en="{{ track.recommendation }}"
+                              data-ru="{{ track.recommendation_ru or track.recommendation }}">{{ track.recommendation }}</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Right: Corner guide + Strategy -->
             <div class="track-right">
-
-                <!-- Corner Guide -->
                 <div class="corners-card">
-                    <h2>Corner-by-Corner Guide</h2>
-                    <p class="corners-subtitle">Key braking points, apexes and driving techniques for each important section.</p>
-
+                    <h2 data-i18n="corner_guide"></h2>
+                    <p class="corners-subtitle" data-i18n="corner_subtitle"></p>
                     <div class="corners-list">
                         {% for corner in track.key_corners %}
-                        <div class="corner-item">
+                        <div class="corner-item" style="cursor:pointer">
                             <div class="corner-header">
-                                {% if corner.turn %}
-                                <span class="corner-turn">T{{ corner.turn }}</span>
-                                {% else %}
-                                <span class="corner-turn">—</span>
-                                {% endif %}
+                                <span class="corner-turn">{% if corner.turn %}T{{ corner.turn }}{% else %}—{% endif %}</span>
                                 <div class="corner-meta">
                                     <span class="corner-name">{{ corner.name }}</span>
                                     <span class="corner-type">{{ corner.type }}</span>
                                 </div>
                             </div>
-                            <p class="corner-tip">{{ corner.tip }}</p>
+                            <p class="corner-tip"
+                               data-en="{{ corner.tip }}"
+                               data-ru="{{ corner.tip_ru or corner.tip }}">{{ corner.tip }}</p>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
 
-                <!-- Strategy -->
                 <div class="strategy-card">
-                    <h2>Race Strategy Guide</h2>
+                    <h2 data-i18n="strategy_title"></h2>
                     <ul class="strategy-list">
                         {% for tip in track.strategy_tips %}
+                        {% set idx = loop.index0 %}
                         <li class="strategy-item">
                             <span class="strat-icon">🔧</span>
-                            <span>{{ tip }}</span>
+                            <span data-en="{{ tip }}"
+                                  data-ru="{{ track.strategy_tips_ru[idx] if track.strategy_tips_ru and idx < track.strategy_tips_ru|length else tip }}">{{ tip }}</span>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
-
             </div>
+
         </div>
     </div>
 </section>
 
-<!-- Next track navigation -->
 <section class="section" style="padding-top:0">
     <div class="container center">
-        <a class="secondary-btn" href="{{ url_for('tracks') }}">← Back to All Circuits</a>
+        <a class="secondary-btn" href="{{ url_for('tracks') }}" data-i18n="back_tracks"></a>
     </div>
 </section>
 
 <script src="{{ url_for('static', filename='js/track.js') }}"></script>
 <script>
-function replayAnimation() {
-    const btn = document.getElementById('replayBtn');
-    btn.disabled = true;
-    btn.textContent = 'Running…';
-    // Reset and restart track animation
-    const event = new Event('DOMContentLoaded');
-    window._trackReplay && window._trackReplay();
-    setTimeout(() => { btn.disabled = false; btn.textContent = '↺ Replay Lap'; }, 3000);
+function updateTrackLang() {
+    const lang = localStorage.getItem('f1_lang') || 'en';
+    document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = lang === 'ru' && el.dataset.ru ? el.dataset.ru : el.dataset.en;
+    });
 }
+updateTrackLang();
+document.addEventListener('langchange', updateTrackLang);
 </script>
 {% endblock %}

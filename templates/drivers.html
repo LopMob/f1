@@ -4,8 +4,8 @@
 {% block content %}
 <section class="page-header">
     <div class="container">
-        <h1>2024 Drivers</h1>
-        <p>All competitors in the Formula 1 World Championship.</p>
+        <h1 data-i18n="drivers_title"></h1>
+        <p data-i18n="drivers_subtitle"></p>
     </div>
 </section>
 
@@ -18,24 +18,12 @@
                 <div class="driver-flag">{{ driver.flag }}</div>
                 <h3 class="driver-name">{{ driver.name }}</h3>
                 <div class="driver-team" style="color: {{ driver.color }}">{{ driver.team }}</div>
-                <p class="driver-bio">{{ driver.bio }}</p>
+                <p class="driver-bio" data-bio-en="{{ driver.bio }}" data-bio-ru="{{ driver.bio_ru }}">{{ driver.bio }}</p>
                 <div class="driver-stats">
-                    <div class="dstat">
-                        <span class="dstat-val">{{ driver.points }}</span>
-                        <span class="dstat-label">PTS</span>
-                    </div>
-                    <div class="dstat">
-                        <span class="dstat-val">{{ driver.wins }}</span>
-                        <span class="dstat-label">Wins</span>
-                    </div>
-                    <div class="dstat">
-                        <span class="dstat-val">{{ driver.podiums }}</span>
-                        <span class="dstat-label">Podiums</span>
-                    </div>
-                    <div class="dstat">
-                        <span class="dstat-val">{{ driver.poles }}</span>
-                        <span class="dstat-label">Poles</span>
-                    </div>
+                    <div class="dstat"><span class="dstat-val">{{ driver.points }}</span><span class="dstat-label" data-i18n="label_pts"></span></div>
+                    <div class="dstat"><span class="dstat-val">{{ driver.wins }}</span><span class="dstat-label" data-i18n="label_wins"></span></div>
+                    <div class="dstat"><span class="dstat-val">{{ driver.podiums }}</span><span class="dstat-label" data-i18n="label_podiums"></span></div>
+                    <div class="dstat"><span class="dstat-val">{{ driver.poles }}</span><span class="dstat-label" data-i18n="label_poles"></span></div>
                 </div>
             </div>
             {% endfor %}
@@ -43,3 +31,14 @@
     </div>
 </section>
 {% endblock %}
+
+<script>
+function updateDriverBios() {
+    const lang = localStorage.getItem('f1_lang') || 'en';
+    document.querySelectorAll('[data-bio-en]').forEach(el => {
+        el.textContent = lang === 'ru' ? el.dataset.bioRu : el.dataset.bioEn;
+    });
+}
+updateDriverBios();
+document.addEventListener('langchange', updateDriverBios);
+</script>

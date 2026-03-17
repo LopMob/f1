@@ -6,56 +6,56 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1 class="hero-title">FORMULA 1 EXPERIENCE</h1>
-        <p class="hero-subtitle">History, circuits, records and interactive track visualization.</p>
+        <p class="hero-subtitle" data-i18n="hero_subtitle"></p>
         <div class="hero-btns">
-            <a class="primary-btn" href="{{ url_for('tracks') }}">Explore Tracks</a>
-            <a class="secondary-btn" href="{{ url_for('standings') }}">2024 Standings</a>
+            <a class="primary-btn" href="{{ url_for('tracks') }}" data-i18n="btn_explore_tracks"></a>
+            <a class="secondary-btn" href="{{ url_for('standings') }}" data-i18n="btn_standings"></a>
         </div>
     </div>
 </section>
 
 <section class="stats-bar">
     <div class="container stats-bar-inner">
-        <div class="qstat"><span class="qstat-val">22</span><span class="qstat-label">Races</span></div>
+        <div class="qstat"><span class="qstat-val">22</span><span class="qstat-label" data-i18n="stat_races"></span></div>
         <div class="qstat-div"></div>
-        <div class="qstat"><span class="qstat-val">575</span><span class="qstat-label">Leader PTS</span></div>
+        <div class="qstat"><span class="qstat-val">575</span><span class="qstat-label" data-i18n="stat_pts"></span></div>
         <div class="qstat-div"></div>
-        <div class="qstat"><span class="qstat-val">20</span><span class="qstat-label">Drivers</span></div>
+        <div class="qstat"><span class="qstat-val">20</span><span class="qstat-label" data-i18n="stat_drivers"></span></div>
         <div class="qstat-div"></div>
-        <div class="qstat"><span class="qstat-val">10</span><span class="qstat-label">Teams</span></div>
+        <div class="qstat"><span class="qstat-val">10</span><span class="qstat-label" data-i18n="stat_teams"></span></div>
         <div class="qstat-div"></div>
-        <div class="qstat"><span class="qstat-val">1:11.8</span><span class="qstat-label">Fastest Lap</span></div>
+        <div class="qstat"><span class="qstat-val">1:11.8</span><span class="qstat-label" data-i18n="stat_lap"></span></div>
     </div>
 </section>
 
 <section class="section features">
     <div class="container">
-        <h2>Explore F1 Motion Lab</h2>
+        <h2 data-i18n="section_explore"></h2>
         <div class="card-grid">
             <a href="{{ url_for('tracks') }}" class="info-card info-card-link">
                 <div class="info-card-icon">🏁</div>
-                <h3>Tracks</h3>
-                <p>Iconic circuits with animated laps, racing lines and corner-by-corner guides.</p>
+                <h3 data-i18n="card_tracks_title"></h3>
+                <p data-i18n="card_tracks_desc"></p>
             </a>
             <a href="{{ url_for('drivers') }}" class="info-card info-card-link">
                 <div class="info-card-icon">🧑‍✈️</div>
-                <h3>Drivers</h3>
-                <p>Full 2024 grid — wins, podiums, poles and career bios for every driver.</p>
+                <h3 data-i18n="card_drivers_title"></h3>
+                <p data-i18n="card_drivers_desc"></p>
             </a>
             <a href="{{ url_for('standings') }}" class="info-card info-card-link">
                 <div class="info-card-icon">🏆</div>
-                <h3>Standings</h3>
-                <p>Driver and constructor championship tables with visual point bars.</p>
+                <h3 data-i18n="card_standings_title"></h3>
+                <p data-i18n="card_standings_desc"></p>
             </a>
             <a href="{{ url_for('races') }}" class="info-card info-card-link">
                 <div class="info-card-icon">📅</div>
-                <h3>Race Results</h3>
-                <p>Full 2024 calendar with winners, fastest laps and race details.</p>
+                <h3 data-i18n="card_races_title"></h3>
+                <p data-i18n="card_races_desc"></p>
             </a>
             <a href="{{ url_for('compare') }}" class="info-card info-card-link">
                 <div class="info-card-icon">⚡</div>
-                <h3>Compare</h3>
-                <p>Head-to-head driver comparison with visual stat bars and career notes.</p>
+                <h3 data-i18n="card_compare_title"></h3>
+                <p data-i18n="card_compare_desc"></p>
             </a>
         </div>
     </div>
@@ -63,7 +63,7 @@
 
 <section class="section cta-section">
     <div class="container center">
-        <a class="primary-btn" href="{{ url_for('tracks') }}">Start Exploring Tracks</a>
+        <a class="primary-btn" href="{{ url_for('tracks') }}" data-i18n="btn_start"></a>
     </div>
 </section>
 {% endblock %}

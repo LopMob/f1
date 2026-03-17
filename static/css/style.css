@@ -750,3 +750,110 @@ a.logo:hover { color: #ff3330; }
 /* hero always visible (no JS animation) */
 .hero-title { opacity: 1 !important; transform: none !important; }
 .hero-subtitle { opacity: 1 !important; transform: none !important; }
+
+/* ── Track visual redesign ────────────────────────────── */
+.track-visual-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.track-visual-header h2 { margin: 0; font-size: 18px; }
+
+.track-legend { display: flex; gap: 14px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.svg-wrap {
+    width: 100%;
+    background: #000;
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.track-svg {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    overflow: visible;
+}
+
+/* Car marker - no filters */
+#carMarker { }
+
+/* Corner markers */
+.corner-dot {
+    transition: r 0.2s;
+}
+.corner-glow { pointer-events: none; }
+
+/* Replay button */
+.replay-btn-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+.replay-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.replay-btn:hover:not(:disabled) {
+    background: rgba(47,128,255,0.15);
+    border-color: #2f80ff;
+    color: #2f80ff;
+}
+.replay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.replay-icon { font-size: 18px; }
+.corner-hint { font-size: 12px; color: #555; }
+
+/* Active corner highlight */
+.corner-item {
+    transition: background 0.2s;
+    border-radius: 10px;
+    padding: 4px 8px;
+    margin: 0 -8px;
+}
+.corner-item:hover { background: rgba(255,255,255,0.04); }
+.corner-item.corner-active {
+    background: rgba(47,128,255,0.08);
+    border-left: 3px solid #2f80ff;
+    padding-left: 12px;
+}
+
+/* ── Language switcher ────────────────────────────── */
+.lang-switcher {
+    display: flex;
+    gap: 4px;
+    margin-left: 20px;
+}
+.lang-btn {
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    color: #888;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.lang-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+.lang-btn.active { background: #e10600; border-color: #e10600; color: #fff; }
