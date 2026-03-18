@@ -1,0 +1,6 @@
+apiVersion: v2
+name: f1-motion-lab
+description: F1 Motion Lab - Formula 1 analytics website
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

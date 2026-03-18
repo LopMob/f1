@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+f1_cache/
+f1-circuits/
+.git/
