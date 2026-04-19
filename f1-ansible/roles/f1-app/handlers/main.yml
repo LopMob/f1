@@ -1,0 +1,6 @@
+---
+- name: Restart container
+  community.docker.docker_container:
+    name: f1-motion-lab
+    state: started
+    restart: true

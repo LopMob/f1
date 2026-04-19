@@ -1,0 +1,4 @@
+---
+app_repo: "https://github.com/LopMob/f1.git"
+app_dir: "/opt/f1-motion-lab"
+app_port: 5001

@@ -1,0 +1,7 @@
+---
+- name: Deploy F1 Motion Lab
+  hosts: f1_servers
+  become: true
+
+  roles:
+    - f1-app
